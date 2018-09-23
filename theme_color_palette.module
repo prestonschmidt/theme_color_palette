@@ -1,0 +1,18 @@
+<?php
+
+function theme_color_palette_preprocess_page(&$variables) {
+    
+    $config = \Drupal::config('theme_color_palette.theme_color_palette_settings');
+    
+    $variables['headerMajorBackgroundColor'] = $config->get('header_major_background_color');
+    $variables['headerMajorLinksColor'] = $config->get('header_major_links_color');
+    
+    $variables['headerMinorBackgroundColor'] = $config->get('header_minor_background_color');
+    $variables['headerMinorLinksColor'] = $config->get('header_minor_links_color');
+    
+    $variables['sidebarBackgroundColor'] = $config->get('sidebar_background_color');
+    $variables['adminSidebarBackgroundColor'] = $config->get('admin_sidebar_background_color');
+    
+}
+
+?>

@@ -1,0 +1,7 @@
+theme_color_palette.settings:
+  path: '/admin/config/theme-color-palette'
+  defaults:
+    _form: '\Drupal\theme_color_palette\Form\ThemeColorPaletteForm'
+    _title: 'Theme Color Palette Configuration'
+  requirements:
+    _permission: 'administer site configuration'

@@ -1,0 +1,9 @@
+name: Theme Color Palette
+type: module
+description: 'This module allows you to change the site color theme via admin configuration. '
+package: Prototype
+core: 8.x
+hidden: false
+dependencies:
+  - user
+configure: theme_color_palette.settings

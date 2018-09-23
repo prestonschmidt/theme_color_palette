@@ -1,0 +1,6 @@
+theme_color_palette.admin:
+  title: 'Theme Color Palette'
+  parent: system.admin_config_system
+  description: 'Adjust general brand colors of your theme. '
+  route_name: theme_color_palette.settings
+  weight: -100
