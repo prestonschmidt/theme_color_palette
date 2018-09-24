@@ -49,9 +49,11 @@ class ThemeColorPaletteForm extends ConfigFormBase {
         //** Page options
         //
         $form['site_page'] = array(
-            '#type' => 'fieldset',
+            '#type' => 'details',
             '#weight' => -20,
             '#title' => t('Site Page:'),
+            '#collapsible' => TRUE,
+            '#collapsed' => FALSE,
             '#attributes' => array(
                 'class' => array(
                     'site_page',
@@ -63,7 +65,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             '#type' => 'textfield',
             '#title' => t('<span style="background-color: ' . $config->get('site_page_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('site_page_background_color')),
             '#required' => false,
-            '#description' => t('Set your Site Pages Background Color. HEX, rbg, rgba. '),
+            '#description' => t('Set your Site Pages Background Color. #HEX, rbg(), rgba(). '),
             '#default_value' => $config->get('site_page_background_color') ? : '#f3f3f3',
         );
         
@@ -71,7 +73,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
         //** Header major region options
         //
         $form['header_major_region'] = array(
-            '#type' => 'fieldset',
+            '#type' => 'details',
             '#weight' => 0,
             '#title' => t('Header Major:'),
             '#attributes' => array(
@@ -85,7 +87,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             '#type' => 'textfield',
             '#title' => t('<span style="background-color: ' . $config->get('header_major_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('header_major_background_color')),
             '#required' => false,
-            '#description' => t('Set your Header Major Background Color. HEX, rbg, rgba. '),
+            '#description' => t('Set your Header Major Background Color. #HEX, rbg(), rgba(). '),
             '#default_value' => $config->get('header_major_background_color') ? : '#2148cf',
         );
         
@@ -93,7 +95,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             '#type' => 'textfield',
             '#title' => t('<span style="background-color: ' . $config->get('header_major_links_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Links Color: ' . $config->get('header_major_links_color')),
             '#required' => false,
-            '#description' => t('Set your Header Major Links Color. HEX, rbg, rgba. '),
+            '#description' => t('Set your Header Major Links Color. #HEX, rbg(), rgba(). '),
             '#default_value' => $config->get('header_major_links_color') ? : '#555555',
         );
         
@@ -101,7 +103,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
         //** Header minor region options
         //
         $form['header_minor_region'] = array(
-            '#type' => 'fieldset',
+            '#type' => 'details',
             '#weight' => 20,
             '#title' => t('Header Minor:'),
             '#attributes' => array(
@@ -115,7 +117,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             '#type' => 'textfield',
             '#title' => t('<span style="background-color: ' . $config->get('header_minor_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('header_minor_background_color')),
             '#required' => false,
-            '#description' => t('Set your Header Minor Background Color. HEX, rbg, rgba. '),
+            '#description' => t('Set your Header Minor Background Color. #HEX, rbg(), rgba(). '),
             '#default_value' => $config->get('header_minor_background_color') ? : '#f3f3f3',
         );
         
@@ -123,7 +125,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             '#type' => 'textfield',
             '#title' => t('<span style="background-color: ' . $config->get('header_minor_links_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Links Color: ' . $config->get('header_minor_links_color')),
             '#required' => false,
-            '#description' => t('Set your Header Minor Links Color. HEX, rbg, rgba. '),
+            '#description' => t('Set your Header Minor Links Color. #HEX, rbg(), rgba(). '),
             '#default_value' => $config->get('header_minor_links_color') ? : '#555555',
         );
         
@@ -131,7 +133,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
         //** Sidebar region options
         //
         $form['sidebar_region'] = array(
-            '#type' => 'fieldset',
+            '#type' => 'details',
             '#weight' => 70,
             '#title' => t('Sidebar:'),
             '#attributes' => array(
@@ -145,7 +147,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             '#type' => 'textfield',
             '#title' => t('<span style="background-color: ' . $config->get('sidebar_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('sidebar_background_color')),
             '#required' => false,
-            '#description' => t('Set your Sidebar Background Color. HEX, rbg, rgba. '),
+            '#description' => t('Set your Sidebar Background Color. #HEX, rbg(), rgba(). '),
             '#default_value' => $config->get('sidebar_background_color') ? : '#f3f3f3',
         );
         
@@ -153,7 +155,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
         //** Admin sidebar region options
         //
         $form['admin_sidebar_region'] = array(
-            '#type' => 'fieldset',
+            '#type' => 'details',
             '#weight' => 90,
             '#title' => t('Admin Sidebar:'),
             '#attributes' => array(
@@ -167,7 +169,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             '#type' => 'textfield',
             '#title' => t('<span style="background-color: ' . $config->get('admin_sidebar_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('admin_sidebar_background_color')),
             '#required' => false,
-            '#description' => t('Set your Admin Sidebar Background Color. HEX, rbg, rgba. '),
+            '#description' => t('Set your Admin Sidebar Background Color. #HEX, rbg(), rgba(). '),
             '#default_value' => $config->get('admin_sidebar_background_color') ? : '#f3f3f3',
         );
         
@@ -175,7 +177,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
         //** Bottom content region options
         //
         $form['bottom_content_region'] = array(
-            '#type' => 'fieldset',
+            '#type' => 'details',
             '#weight' => 100,
             '#title' => t('Bottom Content:'),
             '#attributes' => array(
@@ -189,7 +191,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             '#type' => 'textfield',
             '#title' => t('<span style="background-color: ' . $config->get('bottom_content_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('bottom_content_background_color')),
             '#required' => false,
-            '#description' => t('Set your Header Minor Background Color. HEX, rbg, rgba. '),
+            '#description' => t('Set your Header Minor Background Color. #HEX, rbg(), rgba(). '),
             '#default_value' => $config->get('bottom_content_background_color') ? : '#f3f3f3',
         );
         
@@ -197,7 +199,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
         //** Footer region options
         //
         $form['footer_region'] = array(
-            '#type' => 'fieldset',
+            '#type' => 'details',
             '#weight' => 100,
             '#title' => t('Footer:'),
             '#attributes' => array(
@@ -211,7 +213,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             '#type' => 'textfield',
             '#title' => t('<span style="background-color: ' . $config->get('footer_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('footer_background_color')),
             '#required' => false,
-            '#description' => t('Set your Header Minor Background Color. HEX, rbg, rgba. '),
+            '#description' => t('Set your Header Minor Background Color. #HEX, rbg(), rgba(). '),
             '#default_value' => $config->get('footer_background_color') ? : '#f3f3f3',
         );
         
@@ -219,10 +221,10 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             '#type' => 'textfield',
             '#title' => t('<span style="background-color: ' . $config->get('footer_links_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Links Color: ' . $config->get('footer_links_color')),
             '#required' => false,
-            '#description' => t('Set your Header Minor Links Color. HEX, rbg, rgba. '),
+            '#description' => t('Set your Header Minor Links Color. #HEX, rbg(), rgba(). '),
             '#default_value' => $config->get('footer_links_color') ? : '#555555',
         );
-        
+                
         return parent::buildForm($form, $form_state);
     }
 
