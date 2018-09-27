@@ -1,31 +1,26 @@
 <?php
 
-function theme_color_palette_preprocess_html(&$variables) {
-    
-    $config = \Drupal::config('theme_color_palette.theme_color_palette_settings');
-    
-    $variables['sitePageBackgroundColor'] = $config->get('site_page_background_color');
-    
-}
-
 function theme_color_palette_preprocess_page(&$variables) {
-    
-    $config = \Drupal::config('theme_color_palette.theme_color_palette_settings');
         
-    $variables['headerMajorBackgroundColor'] = $config->get('header_major_background_color');
-    $variables['headerMajorLinksColor'] = $config->get('header_major_links_color');
+//    $config = \Drupal::config('theme_color_palette.theme_color_palette_settings');
+//        
+//    $variables['headerMajorBackgroundColor'] = $config->get('header_major_background_color');
+//    
+//    // Get the site region list
+//    $theme = \Drupal::config('system.theme')->get('default');
+//    $system_region = system_region_list($theme, REGIONS_ALL);
+//
+//    foreach ($system_region as $region) {
+//        
+//        $regionClean = preg_replace('/\W+/','_',strtolower(strip_tags($region)));
+//        $variables[$regionClean . '_background_color'] = $config->get($regionClean . '_background_color');
+//        $variables[$regionClean . '_text_color'] = $config->get($regionClean . '_text_color');
+//        $variables[$regionClean . '_link_color'] = $config->get($regionClean . '_link_color');
+//                                
+//    }
     
-    $variables['headerMinorBackgroundColor'] = $config->get('header_minor_background_color');
-    $variables['headerMinorLinksColor'] = $config->get('header_minor_links_color');
-    
-    $variables['sidebarBackgroundColor'] = $config->get('sidebar_background_color');
-    $variables['adminSidebarBackgroundColor'] = $config->get('admin_sidebar_background_color');
-    
-    $variables['bottomContentBackgroundColor'] = $config->get('bottom_content_background_color');
-    
-    $variables['footerBackgroundColor'] = $config->get('footer_background_color');
-    $variables['footerLinksColor'] = $config->get('footer_links_color');
-    
+    $variables['#attached']['library'][] = 'theme_color_palette/styles';
+
 }
 
 ?>

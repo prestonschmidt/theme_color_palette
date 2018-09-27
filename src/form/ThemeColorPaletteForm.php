@@ -5,34 +5,43 @@ namespace Drupal\theme_color_palette\Form;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
+//function theme_color_palette_preprocess_page(&$variables) {
+//    $region = $variables['elements']['#configuration']['region'];
+//    drupal_set_message($region);
+//}
+
 /**
  * Defines a form that configures the site colors of the theme.
  */
 class ThemeColorPaletteForm extends ConfigFormBase {
-
-  /**
-   * {@inheritdoc}
-   */
+        
+    /**
+    * {@inheritdoc}
+    */
     public function getFormId() {
         return 'theme_color_palette_settings';
     }
 
-  /**
-   * {@inheritdoc}
-   */
+    /**
+    * {@inheritdoc}
+    */
     protected function getEditableConfigNames() {
         return [
             'theme_color_palette.theme_color_palette_settings',
         ];
     }
 
-  /**
-   * {@inheritdoc}
-   */
+    /**
+    * {@inheritdoc}
+    */
     public function buildForm(array $form, FormStateInterface $form_state) {
         
         $config = $this->config('theme_color_palette.theme_color_palette_settings');
         
+        // Get the site region list
+        $theme = \Drupal::config('system.theme')->get('default');
+        $system_region = system_region_list($theme, REGIONS_ALL);
+                
         $form['theme_color_palette_heading'] = [
             '#type' => 'item',
             '#weight' => -100,
@@ -44,186 +53,77 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             '#weight' => -90,
             '#markup' => t('<p>Style options are separated by site regions. View the Blocks page to understand your regions areas.</p>'),
         ];
-        
-        //
-        //** Page options
-        //
-        $form['site_page'] = array(
-            '#type' => 'details',
-            '#weight' => -20,
-            '#title' => t('Site Page:'),
-            '#collapsible' => TRUE,
-            '#collapsed' => FALSE,
-            '#attributes' => array(
-                'class' => array(
-                    'site_page',
+
+        foreach ($system_region as $region) {
+            
+            $regionClean = preg_replace('/\W+/','_',strtolower(strip_tags($region)));
+            
+            $form[$region . '_fieldset'] = array(
+                '#type' => 'fieldset',
+                '#weight' => -20,
+                '#title' => t('@name colors:', array('@name' => $region)),
+                '#attributes' => array(
+                    'class' => array(
+                        'site_page',
+                    ),
                 ),
-            ),
-        );
-        
-        $form['site_page']['site_page_background_color'] = array(
-            '#type' => 'textfield',
-            '#title' => t('<span style="background-color: ' . $config->get('site_page_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('site_page_background_color')),
-            '#required' => false,
-            '#description' => t('Set your Site Pages Background Color. #HEX, rbg(), rgba(). '),
-            '#default_value' => $config->get('site_page_background_color') ? : '#f3f3f3',
-        );
-        
-        //
-        //** Header major region options
-        //
-        $form['header_major_region'] = array(
-            '#type' => 'details',
-            '#weight' => 0,
-            '#title' => t('Header Major:'),
-            '#attributes' => array(
-                'class' => array(
-                    'header_major_region',
-                ),
-            ),
-        );
-        
-        $form['header_major_region']['header_major_background_color'] = array(
-            '#type' => 'textfield',
-            '#title' => t('<span style="background-color: ' . $config->get('header_major_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('header_major_background_color')),
-            '#required' => false,
-            '#description' => t('Set your Header Major Background Color. #HEX, rbg(), rgba(). '),
-            '#default_value' => $config->get('header_major_background_color') ? : '#2148cf',
-        );
-        
-        $form['header_major_region']['header_major_links_color'] = array(
-            '#type' => 'textfield',
-            '#title' => t('<span style="background-color: ' . $config->get('header_major_links_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Links Color: ' . $config->get('header_major_links_color')),
-            '#required' => false,
-            '#description' => t('Set your Header Major Links Color. #HEX, rbg(), rgba(). '),
-            '#default_value' => $config->get('header_major_links_color') ? : '#555555',
-        );
-        
-        //
-        //** Header minor region options
-        //
-        $form['header_minor_region'] = array(
-            '#type' => 'details',
-            '#weight' => 20,
-            '#title' => t('Header Minor:'),
-            '#attributes' => array(
-                'class' => array(
-                    'header_minor_region',
-                ),
-            ),
-        );
-        
-        $form['header_minor_region']['header_minor_background_color'] = array(
-            '#type' => 'textfield',
-            '#title' => t('<span style="background-color: ' . $config->get('header_minor_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('header_minor_background_color')),
-            '#required' => false,
-            '#description' => t('Set your Header Minor Background Color. #HEX, rbg(), rgba(). '),
-            '#default_value' => $config->get('header_minor_background_color') ? : '#f3f3f3',
-        );
-        
-        $form['header_minor_region']['header_minor_links_color'] = array(
-            '#type' => 'textfield',
-            '#title' => t('<span style="background-color: ' . $config->get('header_minor_links_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Links Color: ' . $config->get('header_minor_links_color')),
-            '#required' => false,
-            '#description' => t('Set your Header Minor Links Color. #HEX, rbg(), rgba(). '),
-            '#default_value' => $config->get('header_minor_links_color') ? : '#555555',
-        );
-        
-        //
-        //** Sidebar region options
-        //
-        $form['sidebar_region'] = array(
-            '#type' => 'details',
-            '#weight' => 70,
-            '#title' => t('Sidebar:'),
-            '#attributes' => array(
-                'class' => array(
-                    'sidebar_region',
-                ),
-            ),
-        );
-        
-        $form['sidebar_region']['sidebar_background_color'] = array(
-            '#type' => 'textfield',
-            '#title' => t('<span style="background-color: ' . $config->get('sidebar_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('sidebar_background_color')),
-            '#required' => false,
-            '#description' => t('Set your Sidebar Background Color. #HEX, rbg(), rgba(). '),
-            '#default_value' => $config->get('sidebar_background_color') ? : '#f3f3f3',
-        );
-        
-        //
-        //** Admin sidebar region options
-        //
-        $form['admin_sidebar_region'] = array(
-            '#type' => 'details',
-            '#weight' => 90,
-            '#title' => t('Admin Sidebar:'),
-            '#attributes' => array(
-                'class' => array(
-                    'admin_sidebar_region',
-                ),
-            ),
-        );
-        
-        $form['admin_sidebar_region']['admin_sidebar_background_color'] = array(
-            '#type' => 'textfield',
-            '#title' => t('<span style="background-color: ' . $config->get('admin_sidebar_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('admin_sidebar_background_color')),
-            '#required' => false,
-            '#description' => t('Set your Admin Sidebar Background Color. #HEX, rbg(), rgba(). '),
-            '#default_value' => $config->get('admin_sidebar_background_color') ? : '#f3f3f3',
-        );
-        
-        //
-        //** Bottom content region options
-        //
-        $form['bottom_content_region'] = array(
-            '#type' => 'details',
-            '#weight' => 100,
-            '#title' => t('Bottom Content:'),
-            '#attributes' => array(
-                'class' => array(
-                    'bottom_content_region',
-                ),
-            ),
-        );
-        
-        $form['bottom_content_region']['bottom_content_background_color'] = array(
-            '#type' => 'textfield',
-            '#title' => t('<span style="background-color: ' . $config->get('bottom_content_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('bottom_content_background_color')),
-            '#required' => false,
-            '#description' => t('Set your Header Minor Background Color. #HEX, rbg(), rgba(). '),
-            '#default_value' => $config->get('bottom_content_background_color') ? : '#f3f3f3',
-        );
-        
-        //
-        //** Footer region options
-        //
-        $form['footer_region'] = array(
-            '#type' => 'details',
-            '#weight' => 100,
-            '#title' => t('Footer:'),
-            '#attributes' => array(
-                'class' => array(
-                    'footer_region',
-                ),
-            ),
-        );
-        
-        $form['footer_region']['footer_background_color'] = array(
-            '#type' => 'textfield',
-            '#title' => t('<span style="background-color: ' . $config->get('footer_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get('footer_background_color')),
-            '#required' => false,
-            '#description' => t('Set your Header Minor Background Color. #HEX, rbg(), rgba(). '),
-            '#default_value' => $config->get('footer_background_color') ? : '#f3f3f3',
-        );
-        
-        $form['footer_region']['footer_links_color'] = array(
-            '#type' => 'textfield',
-            '#title' => t('<span style="background-color: ' . $config->get('footer_links_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Links Color: ' . $config->get('footer_links_color')),
-            '#required' => false,
-            '#description' => t('Set your Header Minor Links Color. #HEX, rbg(), rgba(). '),
-            '#default_value' => $config->get('footer_links_color') ? : '#555555',
-        );
+            );
+            
+            $form[$region . '_fieldset'][$regionClean . '_background_color'] = [
+                '#type' => 'textfield',
+                '#title' => t('
+                    <span style="background-color: ' . $config->get($regionClean . '_background_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>Background Color: ' . $config->get($regionClean . '_background_color')),
+                '#required' => false,
+                '#description' => t('Set the ' . $region . ' Background Color. #HEX, rbg(), rgba(). '),
+                '#default_value' => $config->get($regionClean . '_background_color') ? : '#f3f3f3',
+            ];
+            
+            $form[$region . '_fieldset'][$regionClean . '_h2_color'] = [
+                '#type' => 'textfield',
+                '#title' => t('
+                    <span style="background-color: ' . $config->get($regionClean . '_h2_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>h2 Color: ' . $config->get($regionClean . '_p_color')),
+                '#required' => false,
+                '#description' => t('Set the ' . $region . ' h2 Color. #HEX, rbg(), rgba(). '),
+                '#default_value' => $config->get($regionClean . '_h2_color') ? : '#000000',
+            ];
+            
+            $form[$region . '_fieldset'][$regionClean . '_h3_color'] = [
+                '#type' => 'textfield',
+                '#title' => t('
+                    <span style="background-color: ' . $config->get($regionClean . '_h3_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>h3 Color: ' . $config->get($regionClean . '_p_color')),
+                '#required' => false,
+                '#description' => t('Set the ' . $region . ' h3 Color. #HEX, rbg(), rgba(). '),
+                '#default_value' => $config->get($regionClean . '_h3_color') ? : '#000000',
+            ];
+            
+            $form[$region . '_fieldset'][$regionClean . '_h4_color'] = [
+                '#type' => 'textfield',
+                '#title' => t('
+                    <span style="background-color: ' . $config->get($regionClean . '_h4_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>h4 Color: ' . $config->get($regionClean . '_p_color')),
+                '#required' => false,
+                '#description' => t('Set the ' . $region . ' h4 Color. #HEX, rbg(), rgba(). '),
+                '#default_value' => $config->get($regionClean . '_h4_color') ? : '#000000',
+            ];
+            
+            $form[$region . '_fieldset'][$regionClean . '_p_color'] = [
+                '#type' => 'textfield',
+                '#title' => t('
+                    <span style="background-color: ' . $config->get($regionClean . '_p_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>p Color: ' . $config->get($regionClean . '_p_color')),
+                '#required' => false,
+                '#description' => t('Set the ' . $region . ' p Color. #HEX, rbg(), rgba(). '),
+                '#default_value' => $config->get($regionClean . '_p_color') ? : '#000000',
+            ];
+            
+            $form[$region . '_fieldset'][$regionClean . '_a_color'] = [
+                '#type' => 'textfield',
+                '#title' => t('
+                    <span style="background-color: ' . $config->get($regionClean . '_a_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>a Color: ' . $config->get($regionClean . '_a_color')),
+                '#required' => false,
+                '#description' => t('Set the ' . $region . ' a Color. #HEX, rbg(), rgba(). '),
+                '#default_value' => $config->get($regionClean . '_a_color') ? : '#ca1404',
+            ];
+            
+        }
                 
         return parent::buildForm($form, $form_state);
     }
@@ -232,29 +132,71 @@ class ThemeColorPaletteForm extends ConfigFormBase {
    * {@inheritdoc}
    */
     public function submitForm(array &$form, FormStateInterface $form_state) {
+        
         $values = $form_state->getValues();
         
-        $this->config('theme_color_palette.theme_color_palette_settings')
-            ->set('site_page_background_color', $values['site_page_background_color']);
-        $this->config('theme_color_palette.theme_color_palette_settings')
-            ->set('header_major_background_color', $values['header_major_background_color']);
-        $this->config('theme_color_palette.theme_color_palette_settings')
-            ->set('header_major_links_color', $values['header_major_links_color']);
-        $this->config('theme_color_palette.theme_color_palette_settings')
-            ->set('header_minor_background_color', $values['header_minor_background_color']);
-        $this->config('theme_color_palette.theme_color_palette_settings')
-            ->set('header_minor_links_color', $values['header_minor_links_color']);
-        $this->config('theme_color_palette.theme_color_palette_settings')
-            ->set('sidebar_background_color', $values['sidebar_background_color']);
-        $this->config('theme_color_palette.theme_color_palette_settings')
-            ->set('admin_sidebar_background_color', $values['admin_sidebar_background_color']);
-        $this->config('theme_color_palette.theme_color_palette_settings')
-            ->set('footer_background_color', $values['footer_background_color']);
-        $this->config('theme_color_palette.theme_color_palette_settings')
-            ->set('bottom_content_background_color', $values['bottom_content_background_color']);
-        $this->config('theme_color_palette.theme_color_palette_settings')
-            ->set('footer_links_color', $values['footer_links_color'])
-            ->save();
+        // Get the site region list
+        $theme = \Drupal::config('system.theme')->get('default');
+        $system_region = system_region_list($theme, REGIONS_ALL);
+        
+        
+        //Get path to module
+        $module_handler = \Drupal::service('module_handler');
+        $moduel_path = $module_handler->getModule('theme_color_palette')->getPath();
+        
+        //Set path to stylesheet
+        $file_path = $moduel_path . "/css/theme-color-palette.css";
+        
+        //Instantiate style variables
+        $background_color = '';
+        $h2_color = '';
+        $h3_color = '';
+        $h4_color = '';
+        $p_color = '';
+        $a_color = '';
+                
+        foreach ($system_region as $region) {
+            
+            //Format region name as safe value
+            $regionClean = preg_replace('/\W+/','_',strtolower(strip_tags($region)));
+                        
+            $this->config('theme_color_palette.theme_color_palette_settings')
+            ->set($regionClean . '_background_color', $values[$regionClean . '_background_color']);
+            $this->config('theme_color_palette.theme_color_palette_settings')
+            ->set($regionClean . '_h2_color', $values[$regionClean . '_h2_color']);
+            $this->config('theme_color_palette.theme_color_palette_settings')
+            ->set($regionClean . '_h3_color', $values[$regionClean . '_h3_color']);
+            $this->config('theme_color_palette.theme_color_palette_settings')
+            ->set($regionClean . '_h4_color', $values[$regionClean . '_h4_color']);
+            $this->config('theme_color_palette.theme_color_palette_settings')
+            ->set($regionClean . '_p_color', $values[$regionClean . '_p_color']);
+            $this->config('theme_color_palette.theme_color_palette_settings')
+            ->set($regionClean . '_a_color', $values[$regionClean . '_a_color']);
+            $this->config('theme_color_palette.theme_color_palette_settings')->save();
+            
+            //Format region name for css class
+            $regionClass = preg_replace('/_/','-',$regionClean);
+
+            //Create region background styles
+            $background_color .= '#' . $regionClass . " { background-color: " . $values[$regionClean . '_background_color'] . "; }\n";
+            //Create text color styles
+            $h2_color .= '#' . $regionClass . " h2 { color: " . $values[$regionClean . '_h2_color'] . "; }\n";
+            $h3_color .= '#' . $regionClass . " h3 { color: " . $values[$regionClean . '_h3_color'] . "; }\n";
+            $h4_color .= '#' . $regionClass . " h4 { color: " . $values[$regionClean . '_h4_color'] . "; }\n";
+            $p_color .= '#' . $regionClass . " p { color: " . $values[$regionClean . '_p_color'] . "; }\n";
+            //Create link color styles
+            $a_color .= '#' . $regionClass . " a { color: " . $values[$regionClean . '_a_color'] . "; }\n";
+            
+            //Put all the styles together
+            $content = $background_color . $h2_color . $h3_color . $h4_color . $p_color . $a_color;
+            
+        }
+        
+        //Write/rewrite the stylesheet with the styles above
+        $file = fopen($file_path, "w");
+        fwrite($file, $content);
+        fclose($file);
+        
         parent::submitForm($form, $form_state);
         
     }
