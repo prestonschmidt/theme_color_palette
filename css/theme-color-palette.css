@@ -1,5 +1,5 @@
-#drupal-area { background-color: #4dafff; }
-#header-major { background-color: #4dafff; }
+#drupal-area { background-color: #f3f3f3; }
+#header-major { background-color: rgb(33, 72, 207); }
 #header-minor { background-color: #f3f3f3; }
 #content-top { background-color: #f3f3f3; }
 #content { background-color: #f3f3f3; }
@@ -29,7 +29,7 @@
 #header-major h4 { color: #000000; }
 #header-minor h4 { color: #000000; }
 #content-top h4 { color: #000000; }
-#content h4 { color: #4dafff; }
+#content h4 { color: #000000; }
 #content-bottom h4 { color: #000000; }
 #footer h4 { color: #000000; }
 #sidebar-admin h4 { color: #000000; }
@@ -52,3 +52,12 @@
 #footer a { color: #ca1404; }
 #sidebar-admin a { color: #ca1404; }
 #sidebar a { color: #ca1404; }
+#drupal-area a:hover { color: #ca1404; }
+#header-major a:hover { color: #ca1404; }
+#header-minor a:hover { color: #ca1404; }
+#content-top a:hover { color: #ca1404; }
+#content a:hover { color: #ca1404; }
+#content-bottom a:hover { color: #ca1404; }
+#footer a:hover { color: #ca1404; }
+#sidebar-admin a:hover { color: #ca1404; }
+#sidebar a:hover { color: #ca1404; }

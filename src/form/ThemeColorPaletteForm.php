@@ -64,7 +64,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
                 '#title' => t('@name colors:', array('@name' => $region)),
                 '#attributes' => array(
                     'class' => array(
-                        'site_page',
+                        $regionClean,
                     ),
                 ),
             );
@@ -123,6 +123,15 @@ class ThemeColorPaletteForm extends ConfigFormBase {
                 '#default_value' => $config->get($regionClean . '_a_color') ? : '#ca1404',
             ];
             
+            $form[$region . '_fieldset'][$regionClean . '_a_hover_color'] = [
+                '#type' => 'textfield',
+                '#title' => t('
+                    <span style="background-color: ' . $config->get($regionClean . '_a_hover_color') . '; width: 40px; height: 30px; margin: 0 10px 10px 0; display: inline-block; vertical-align: middle; box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); border: 3px solid #fff;"></span>a Hover Color: ' . $config->get($regionClean . '_a_hover_color')),
+                '#required' => false,
+                '#description' => t('Set the ' . $region . ' a Hover Color. #HEX, rbg(), rgba(). '),
+                '#default_value' => $config->get($regionClean . '_a_hover_color') ? : '#ca1404',
+            ];
+                        
         }
                 
         return parent::buildForm($form, $form_state);
@@ -154,6 +163,7 @@ class ThemeColorPaletteForm extends ConfigFormBase {
         $h4_color = '';
         $p_color = '';
         $a_color = '';
+        $a_hover_color = '';
                 
         foreach ($system_region as $region) {
             
@@ -172,7 +182,8 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             ->set($regionClean . '_p_color', $values[$regionClean . '_p_color']);
             $this->config('theme_color_palette.theme_color_palette_settings')
             ->set($regionClean . '_a_color', $values[$regionClean . '_a_color']);
-            $this->config('theme_color_palette.theme_color_palette_settings')->save();
+            $this->config('theme_color_palette.theme_color_palette_settings')
+            ->set($regionClean . '_a_hover_color', $values[$regionClean . '_a_hover_color'])->save();
             
             //Format region name for css class
             $regionClass = preg_replace('/_/','-',$regionClean);
@@ -186,9 +197,10 @@ class ThemeColorPaletteForm extends ConfigFormBase {
             $p_color .= '#' . $regionClass . " p { color: " . $values[$regionClean . '_p_color'] . "; }\n";
             //Create link color styles
             $a_color .= '#' . $regionClass . " a { color: " . $values[$regionClean . '_a_color'] . "; }\n";
+            $a_hover_color .= '#' . $regionClass . " a:hover { color: " . $values[$regionClean . '_a_hover_color'] . "; }\n";
             
             //Put all the styles together
-            $content = $background_color . $h2_color . $h3_color . $h4_color . $p_color . $a_color;
+            $content = $background_color . $h2_color . $h3_color . $h4_color . $p_color . $a_color . $a_hover_color;
             
         }
         

@@ -1,6 +1,13 @@
 theme_color_palette.admin:
   title: 'Theme Color Palette'
-  parent: system.admin_config_system
-  description: 'Adjust general brand colors of your theme. '
+  parent: prototype_suite.group.admin
+  description: 'Adjust the colors of your theme by region and element. '
   route_name: theme_color_palette.settings
   weight: -100
+  
+prototype_suite.group.admin:
+  title: 'Prototype Suite'
+  route_name: system.admin_config_prototype_suite
+  parent: system.admin_config
+  description: 'Prototype Suite Configuration'
+  weight: -999
