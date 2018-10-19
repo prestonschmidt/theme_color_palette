@@ -1,5 +1,5 @@
 theme_color_palette.admin:
-  title: 'Theme Color Palette'
+  title: 'Theme Color Palette Settings'
   parent: prototype_suite.group.admin
   description: 'Adjust the colors of your theme by region and element. '
   route_name: theme_color_palette.settings
